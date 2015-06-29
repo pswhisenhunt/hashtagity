@@ -3,7 +3,7 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var HashTagView = require('./HashTagView');
 var Actions = require('../Actions');
-
+var KEY_ENTER = 13;
 
 var AppView = Backbone.View.extend({
   el: '#hashtagity',
@@ -23,6 +23,7 @@ var AppView = Backbone.View.extend({
     var hashType = this.$('.hash-type:checked').val();
     var convertedText = null;
     var textToConvert = this.input.val().trim();
+
     switch(hashType) {
       case 'singleHash':
         convertedText = Actions.singleHash(textToConvert)
@@ -36,7 +37,9 @@ var AppView = Backbone.View.extend({
   },
 
   createOnEnter: function(e){
-    if ( e.which !== 13 || !this.input.val().trim() ) {
+    var didNotPressEnter = e.which !== KEY_ENTER;
+    var isEmptyText = !this.input.val().trim();
+    if (didNotPressEnter || isEmptyText) {
       return;
     }
     this.createHash();
@@ -44,7 +47,7 @@ var AppView = Backbone.View.extend({
 
   addOne: function(hashTag){
     var view = new HashTagView({model: hashTag});
-    $('#hash-tag-list').append(view.render().el);
+    this.$('#hash-tag-list').append(view.render().el);
   }
 });
 
