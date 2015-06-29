@@ -1,4 +1,13 @@
-body {
-  background-color: pink; }
+#hashtagity ul {
+  list-style-type: none; }
+
+#hash-tag-list input.edit {
+  display: none; }
+
+#hash-tag-list .editing label {
+  display: none; }
+
+#hash-tag-list .editing input.edit {
+  display: inline; }
 
 /*# sourceMappingURL=main.css.map */

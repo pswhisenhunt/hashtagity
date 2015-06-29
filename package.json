@@ -9,7 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "grunt": "^0.4.5"
+    "backbone": "^1.2.1",
+    "backbone.localstorage": "^1.1.16",
+    "grunt": "^0.4.5",
+    "jquery": "^2.1.4",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "grunt-browserify": "^3.8.0",

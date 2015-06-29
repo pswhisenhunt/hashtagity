@@ -2,8 +2,34 @@
 <html>
   <head>
     <title></title>
+    <link rel="stylesheet" href="main.css"></link>
   </head>
   <body>
+    <section id="hashtagity">
+      <header>
+        <h1>Hastagity</h1>
+      </header>
+      <main>
+        <input id="new-hash-tag" autofocus>
+        <input type="radio" name="hash-type" class="hash-type" value="singleHash" checked> Single Hash
+        <input type="radio" name="hash-type" class="hash-type" value="shrinkify"> Shrinkify
+        <input type="radio" name="hash-type" class="hash-type" value="hashEvery"> Hash Every Word
+        <button id="create-hash">DO IT</button>
+      </main>
+      <section id="main">
+        <ul id="hash-tag-list"></ul>
+      </section>
+    </section>
+
+    <!-- Templates -->
+    <script type="text/template" id="hash-tag-template">
+      <div class="view">
+        <label><%- text %></label>
+        <input class="edit" value="<%- text %>">
+        <button class="destroy">remove</button>
+      </div>
+    </script>
+    <footer class="footer"></footer>
     <script src="bundle.js"></script>
   </body>
 </html>
