@@ -11,7 +11,13 @@ HashTagView = Backbone.View.extend({
     'dblclick label' : 'edit',
     'keypress .edit' : 'updateOnEnter',
     'blur .edit' : 'close',
-    'click .destroy': 'destroy'
+    'click .destroy': 'destroy',
+    'mouseover .delete': 'showDestroy'
+  },
+
+  showDestroy: function() {
+    this.$el.removeClass('delete');
+    this.$el.addClass('deleting')
   },
 
   render: function(){
@@ -32,7 +38,6 @@ HashTagView = Backbone.View.extend({
 
   close: function(){
     var text = this.input.val().trim();
-    console.log(this.model)
     if(text) {
       this.model.save({text: text});
     }

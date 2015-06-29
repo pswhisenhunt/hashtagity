@@ -46,19 +46,71 @@ HashTagList = Backbone.Collection.extend({
 
 module.exports = HashTagList;
 
-},{"../Models/HashTag":3,"backbone":7,"backbone.localstorage":6}],3:[function(require,module,exports){
+},{"../Models/HashTag":3,"backbone":8,"backbone.localstorage":7}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 
 HashTag = Backbone.Model.extend({
   defaults: {
-    hashType : 'singleHash',
     text: ''
   }
 });
 
 module.exports = HashTag;
 
-},{"backbone":7}],4:[function(require,module,exports){
+},{"backbone":8}],4:[function(require,module,exports){
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var HashTagView = require('./HashTagView');
+var Actions = require('../Actions');
+
+
+var AppView = Backbone.View.extend({
+  el: '#hashtagity',
+
+  events: {
+    'keypress #new-hash-tag': 'createOnEnter',
+    'click #create-hash' : 'createHash'
+  },
+
+  initialize: function () {
+    this.input = this.$('#new-hash-tag');
+    this.collection.on('add', this.addOne, this);
+    this.collection.fetch();
+  },
+
+  createHash : function() {
+    var hashType = this.$('.hash-type:checked').val();
+    var convertedText = null;
+    var textToConvert = this.input.val().trim();
+    switch(hashType) {
+      case 'singleHash':
+        convertedText = Actions.singleHash(textToConvert)
+      case 'shrinkify':
+        convertedText = Actions.shrinkify(textToConvert);
+      case 'hashEvery':
+        convertedText = Actions.hashEvery(textToConvert);
+    }
+    this.collection.create({text: convertedText});
+    this.input.val('');
+  },
+
+  createOnEnter: function(e){
+    if ( e.which !== 13 || !this.input.val().trim() ) {
+      return;
+    }
+    this.createHash();
+  },
+
+  addOne: function(hashTag){
+    var view = new HashTagView({model: hashTag});
+    $('#hash-tag-list').append(view.render().el);
+  }
+});
+
+module.exports = AppView;
+
+},{"../Actions":1,"./HashTagView":5,"backbone":8,"jquery":9,"underscore":10}],5:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -72,7 +124,13 @@ HashTagView = Backbone.View.extend({
     'dblclick label' : 'edit',
     'keypress .edit' : 'updateOnEnter',
     'blur .edit' : 'close',
-    'click .destroy': 'destroy'
+    'click .destroy': 'destroy',
+    'mouseover .delete': 'showDestroy'
+  },
+
+  showDestroy: function() {
+    this.$el.removeClass('delete');
+    this.$el.addClass('deleting')
   },
 
   render: function(){
@@ -93,7 +151,6 @@ HashTagView = Backbone.View.extend({
 
   close: function(){
     var text = this.input.val().trim();
-    console.log(this.model)
     if(text) {
       this.model.save({text: text});
     }
@@ -113,62 +170,13 @@ HashTagView = Backbone.View.extend({
 
 module.exports = HashTagView;
 
-},{"backbone":7,"jquery":8,"underscore":9}],5:[function(require,module,exports){
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
+},{"backbone":8,"jquery":9,"underscore":10}],6:[function(require,module,exports){
 var HashTagList = require('./Collections/HashTags');
-var HashTag = require('./Models/HashTag');
-var HashTagView = require('./Views/HashTagView');
-var Actions = require('./Actions');
-
-
-AppView = Backbone.View.extend({
-  el: '#hashtagity',
-
-  events: {
-    'keypress #new-hash-tag': 'createOnEnter',
-    'click #create-hash' : 'createHash'
-  },
-
-  initialize: function () {
-    this.input = this.$('#new-hash-tag');
-    this.collection.on('add', this.addOne, this);
-    this.collection.fetch();
-  },
-
-  createHash : function() {
-    this.hashType = this.$('.hash-type:checked').val();
-    if (this.hashType === 'singleHash') {
-      var text = Actions.singleHash(this.input.val().trim());
-    }
-    else if (this.hashType === 'shrinkify') {
-      var text = Actions.shrinkify(this.input.val().trim());
-    }
-    else if (this.hashType === 'hashEvery') {
-      var text = Actions.hashEvery(this.input.val().trim());
-    }
-    this.collection.create({text: text, hashType: this.hashType});
-    this.input.val('');
-  },
-
-  createOnEnter: function(e){
-    if ( e.which !== 13 || !this.input.val().trim() ) {
-      return;
-    }
-    this.createHash();
-  },
-
-  addOne: function(hashTag){
-    var view = new HashTagView({model: hashTag});
-    $('#hash-tag-list').append(view.render().el);
-  }
-});
-
+var AppView = require('./Views/AppView');
 var hashTagList = new HashTagList();
 var appView = new AppView({collection: hashTagList});
 
-},{"./Actions":1,"./Collections/HashTags":2,"./Models/HashTag":3,"./Views/HashTagView":4,"backbone":7,"jquery":8,"underscore":9}],6:[function(require,module,exports){
+},{"./Collections/HashTags":2,"./Views/AppView":4}],7:[function(require,module,exports){
 /**
  * Backbone localStorage Adapter
  * Version 1.1.16
@@ -428,7 +436,7 @@ Backbone.sync = function(method, model, options) {
 return Backbone.LocalStorage;
 }));
 
-},{"backbone":7}],7:[function(require,module,exports){
+},{"backbone":8}],8:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -2305,7 +2313,7 @@ return Backbone.LocalStorage;
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":8,"underscore":9}],8:[function(require,module,exports){
+},{"jquery":9,"underscore":10}],9:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11517,7 +11525,7 @@ return jQuery;
 
 }));
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13067,4 +13075,4 @@ return jQuery;
   }
 }.call(this));
 
-},{}]},{},[5]);
+},{}]},{},[6]);

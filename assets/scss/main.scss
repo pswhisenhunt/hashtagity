@@ -58,6 +58,21 @@ body {
   }
   .hashtagity ul {
     list-style-type: none;
+
+    li {
+      font-size: 36px;
+    }
+    .icons {
+      i {
+        font-size: 32px;
+      }
+      .delete {
+        display: none;
+      }
+      .deleting {
+        display: inline;
+      }
+    }
   }
   .hash-tag-list input.edit {
     display: none;
@@ -66,7 +81,10 @@ body {
     display: none;
   }
   .hash-tag-list .editing input.edit {
+    width: 200px;
+    height: 50px;
+    font-size: 22px;
+    font-family: $body-font;
     display: inline;
   }
-
 }

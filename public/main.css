@@ -46,11 +46,23 @@ body {
     color: rgba(62, 17, 66, 0.75); }
   body .hashtagity ul {
     list-style-type: none; }
+    body .hashtagity ul li {
+      font-size: 36px; }
+    body .hashtagity ul .icons i {
+      font-size: 32px; }
+    body .hashtagity ul .icons .delete {
+      display: none; }
+    body .hashtagity ul .icons .deleting {
+      display: inline; }
   body .hash-tag-list input.edit {
     display: none; }
   body .hash-tag-list .editing label {
     display: none; }
   body .hash-tag-list .editing input.edit {
+    width: 200px;
+    height: 50px;
+    font-size: 22px;
+    font-family: "Marvel", sans-serif;
     display: inline; }
 
 /*# sourceMappingURL=main.css.map */
