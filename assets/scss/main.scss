@@ -1,12 +1,72 @@
-#hashtagity ul {
-  list-style-type: none; 
-}
-#hash-tag-list input.edit {
-  display: none;
-}
-#hash-tag-list .editing label {
-  display: none;
-}
-#hash-tag-list .editing input.edit {
-  display: inline;
+$primary-color: #DCFF00;
+$secondary-color: rgba(62, 17, 66, 0.75);
+$orange: #E9AB3B;
+$heading-font: 'Fredoka One', monospace;
+$body-font: 'Marvel', sans-serif; ;
+/* font-family: 'News Cycle', sans-serif;
+font-family: 'Fredoka One', cursive;
+font-family: 'Chewy', cursive;
+font-family: 'Advent Pro', sans-serif;
+font-family: 'Marvel', sans-serif; */
+body {
+  background-color: $secondary-color;
+  font-family: $body-font;
+  font-size: 24px;
+
+  .hashtagity {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .hashtagity h1 {
+    color: $orange;
+    font-family: $heading-font;
+    letter-spacing: 14px;
+    font-size: 86px;
+    margin-left: 28%;
+    margin-right: 30%;
+    padding: 10px;
+  }
+  .new-hash-tag {
+    width:65%;
+    height: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 10px;
+    font-size: 22px;
+    font-family: $body-font;
+  }
+  .hash-options {
+    width:65%;
+    margin-left: 35%;
+    margin-right: 35%;
+    padding: 10px;
+    font-size: 26px;
+    color: black;
+  }
+  .create-hash {
+    width: 450px;
+    height: 50px;
+    margin-left: 35%;
+    margin-right: 35%;
+    border: none;
+    border-radius: 10px;
+    font-size: 34;
+    font-family: $heading-font;
+    background-color: $orange;
+    color: $secondary-color;
+  }
+  .hashtagity ul {
+    list-style-type: none;
+  }
+  .hash-tag-list input.edit {
+    display: none;
+  }
+  .hash-tag-list .editing label {
+    display: none;
+  }
+  .hash-tag-list .editing input.edit {
+    display: inline;
+  }
+
 }

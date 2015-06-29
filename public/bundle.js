@@ -39,7 +39,9 @@ var LocalStorage = require('backbone.localstorage');
 
 HashTagList = Backbone.Collection.extend({
   model: HashTag,
+
   localStorage: new LocalStorage("backbone-hashtags")
+
 });
 
 module.exports = HashTagList;
@@ -63,26 +65,32 @@ var Backbone = require('backbone');
 
 HashTagView = Backbone.View.extend({
   tagName: 'li',
+
   template: _.template($('#hash-tag-template').html()),
-  render: function(){
-    this.$el.html(this.template(this.model.toJSON()));
-    this.input = this.$('.edit');
-    return this;
-  },
-  initialize: function(){
-    this.model.on('change', this.render, this);
-    this.model.on('destroy', this.remove, this);
-  },
+
   events: {
     'dblclick label' : 'edit',
     'keypress .edit' : 'updateOnEnter',
     'blur .edit' : 'close',
     'click .destroy': 'destroy'
   },
+
+  render: function(){
+    this.$el.html(this.template(this.model.toJSON()));
+    this.input = this.$('.edit');
+    return this;
+  },
+
+  initialize: function(){
+    this.model.on('change', this.render, this);
+    this.model.on('destroy', this.remove, this);
+  },
+
   edit: function(){
     this.$el.addClass('editing');
     this.input.focus();
   },
+
   close: function(){
     var text = this.input.val().trim();
     console.log(this.model)
@@ -91,11 +99,13 @@ HashTagView = Backbone.View.extend({
     }
     this.$el.removeClass('editing');
   },
+
   updateOnEnter: function(e){
     if(e.which == 13){
       this.close();
     }
   },
+
   destroy: function(){
     this.model.destroy();
   }
@@ -116,15 +126,15 @@ var Actions = require('./Actions');
 AppView = Backbone.View.extend({
   el: '#hashtagity',
 
+  events: {
+    'keypress #new-hash-tag': 'createOnEnter',
+    'click #create-hash' : 'createHash'
+  },
+
   initialize: function () {
     this.input = this.$('#new-hash-tag');
     this.collection.on('add', this.addOne, this);
     this.collection.fetch();
-  },
-
-  events: {
-    'keypress #new-hash-tag': 'createOnEnter',
-    'click #create-hash' : 'createHash'
   },
 
   createHash : function() {

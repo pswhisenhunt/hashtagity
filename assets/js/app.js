@@ -10,15 +10,15 @@ var Actions = require('./Actions');
 AppView = Backbone.View.extend({
   el: '#hashtagity',
 
+  events: {
+    'keypress #new-hash-tag': 'createOnEnter',
+    'click #create-hash' : 'createHash'
+  },
+
   initialize: function () {
     this.input = this.$('#new-hash-tag');
     this.collection.on('add', this.addOne, this);
     this.collection.fetch();
-  },
-
-  events: {
-    'keypress #new-hash-tag': 'createOnEnter',
-    'click #create-hash' : 'createHash'
   },
 
   createHash : function() {

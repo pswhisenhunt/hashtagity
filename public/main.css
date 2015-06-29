@@ -1,13 +1,56 @@
-#hashtagity ul {
-  list-style-type: none; }
-
-#hash-tag-list input.edit {
-  display: none; }
-
-#hash-tag-list .editing label {
-  display: none; }
-
-#hash-tag-list .editing input.edit {
-  display: inline; }
+/* font-family: 'News Cycle', sans-serif;
+font-family: 'Fredoka One', cursive;
+font-family: 'Chewy', cursive;
+font-family: 'Advent Pro', sans-serif;
+font-family: 'Marvel', sans-serif; */
+body {
+  background-color: rgba(62, 17, 66, 0.75);
+  font-family: "Marvel", sans-serif;
+  font-size: 24px; }
+  body .hashtagity {
+    width: 90%;
+    margin: 0 auto; }
+  body .hashtagity h1 {
+    color: #E9AB3B;
+    font-family: "Fredoka One", monospace;
+    letter-spacing: 14px;
+    font-size: 86px;
+    margin-left: 28%;
+    margin-right: 30%;
+    padding: 10px; }
+  body .new-hash-tag {
+    width: 65%;
+    height: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 10px;
+    font-size: 22px;
+    font-family: "Marvel", sans-serif; }
+  body .hash-options {
+    width: 65%;
+    margin-left: 35%;
+    margin-right: 35%;
+    padding: 10px;
+    font-size: 26px;
+    color: black; }
+  body .create-hash {
+    width: 450px;
+    height: 50px;
+    margin-left: 35%;
+    margin-right: 35%;
+    border: none;
+    border-radius: 10px;
+    font-size: 34;
+    font-family: "Fredoka One", monospace;
+    background-color: #E9AB3B;
+    color: rgba(62, 17, 66, 0.75); }
+  body .hashtagity ul {
+    list-style-type: none; }
+  body .hash-tag-list input.edit {
+    display: none; }
+  body .hash-tag-list .editing label {
+    display: none; }
+  body .hash-tag-list .editing input.edit {
+    display: inline; }
 
 /*# sourceMappingURL=main.css.map */

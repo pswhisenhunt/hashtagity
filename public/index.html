@@ -1,32 +1,42 @@
 <!DOCTYPE>
 <html>
   <head>
-    <title></title>
+    <title>Hashtagity!</title>
+    <link href='http://fonts.googleapis.com/css?family=News+Cycle|Fredoka+One|Chewy|Advent+Pro|Marvel' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css"></link>
   </head>
   <body>
-    <section id="hashtagity">
+    <section id="hashtagity" class="hashtagity">
       <header>
-        <h1>Hastagity</h1>
+        <h1 class="header">#Hastagity</h1>
       </header>
       <main>
-        <input id="new-hash-tag" autofocus>
-        <input type="radio" name="hash-type" class="hash-type" value="singleHash" checked> Single Hash
-        <input type="radio" name="hash-type" class="hash-type" value="shrinkify"> Shrinkify
-        <input type="radio" name="hash-type" class="hash-type" value="hashEvery"> Hash Every Word
-        <button id="create-hash">DO IT</button>
+        <textarea id="new-hash-tag" class="new-hash-tag" autofocus></textarea>
+        <div class="hash-options">
+          <input type="radio" name="hash-type" class="hash-type" value="singleHash" checked> Single Hash
+          <input type="radio" name="hash-type" class="hash-type" value="shrinkify"> Shrinkify
+          <input type="radio" name="hash-type" class="hash-type" value="hashEvery"> Hash Every Word
+        </div>
+        <button id="create-hash" class="create-hash">DO IT</button>
       </main>
       <section id="main">
-        <ul id="hash-tag-list"></ul>
+        <ul id="hash-tag-list" class="hash-tag-list"></ul>
       </section>
     </section>
 
     <!-- Templates -->
-    <script type="text/template" id="hash-tag-template">
+    <script type="text/template" id="hash-tag-template" class="hash-tag-template">
       <div class="view">
         <label><%- text %></label>
         <input class="edit" value="<%- text %>">
-        <button class="destroy">remove</button>
+        <nav class="icons">
+          <i class="fa fa-pencil-square"></i>
+          <i class="fa fa-times destroy"></i>
+          <i class="fa fa-clipboard"></i>
+          <i class="fa fa-twitter-square"></i>
+          <i class="fa fa-facebook-square"></i>
+        </nav>
       </div>
     </script>
     <footer class="footer"></footer>
