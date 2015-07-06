@@ -1,8 +1,16 @@
+/* TODO: prefix these with color- so that you whats a color, same for fonts */
 /* font-family: 'News Cycle', sans-serif;
 font-family: 'Fredoka One', cursive;
 font-family: 'Chewy', cursive;
 font-family: 'Advent Pro', sans-serif;
 font-family: 'Marvel', sans-serif; */
+/* TODO: dont style tags / elements directly.
+  put a line of whitespace between presetnationl and structural styles.
+  dont use class naemes that describe the content.
+  nesting is OK i guess, but you cant re-use nested classes really that well and your
+  styles are directly coupled to the DOM. im not a fan of nesting really.
+  i find using a unique class name for each thing actually works pretty well
+*/
 body {
   background-color: rgba(62, 17, 66, 0.75);
   font-family: "Marvel", sans-serif;
@@ -18,6 +26,9 @@ body {
     margin-left: 28%;
     margin-right: 30%;
     padding: 10px; }
+  body .text-counter {
+    float: right;
+    margin-right: 200px; }
   body .new-hash-tag {
     width: 65%;
     height: 60%;
@@ -50,9 +61,13 @@ body {
       font-size: 36px; }
     body .hashtagity ul .icons i {
       font-size: 32px; }
-    body .hashtagity ul .icons .delete {
+    body .hashtagity ul .icons .hide-delete {
       display: none; }
-    body .hashtagity ul .icons .deleting {
+    body .hashtagity ul .icons .show-delete {
+      display: inline; }
+    body .hashtagity ul .icons .hide-edit {
+      display: none; }
+    body .hashtagity ul .icons .show-edit {
       display: inline; }
   body .hash-tag-list input.edit {
     display: none; }
@@ -64,5 +79,12 @@ body {
     font-size: 22px;
     font-family: "Marvel", sans-serif;
     display: inline; }
+
+.error {
+  color: red;
+  font-size: 24px; }
+
+.icons a {
+  color: black; }
 
 /*# sourceMappingURL=main.css.map */

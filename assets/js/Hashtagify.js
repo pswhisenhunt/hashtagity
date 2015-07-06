@@ -1,4 +1,4 @@
-var Actions = {
+var Hashtagify = {
   singleHash: function(text) {
     return '#' + text;
   },
@@ -29,4 +29,4 @@ var Actions = {
   }
 }
 
-module.exports = Actions;
+module.exports = Hashtagify;

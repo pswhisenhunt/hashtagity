@@ -1,5 +1,19 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Actions = {
+var HashTag = require('../Models/ConvertedText');
+var Backbone = require('backbone');
+var LocalStorage = require('backbone.localstorage');
+
+ConvertedTextList = Backbone.Collection.extend({
+  model: ConvertedText,
+
+  localStorage: new LocalStorage("backbone-hashtags")
+
+});
+
+module.exports = ConvertedTextList;
+
+},{"../Models/ConvertedText":3,"backbone":10,"backbone.localstorage":9}],2:[function(require,module,exports){
+var Hashtagify = {
   singleHash: function(text) {
     return '#' + text;
   },
@@ -30,107 +44,179 @@ var Actions = {
   }
 }
 
-module.exports = Actions;
+module.exports = Hashtagify;
 
-},{}],2:[function(require,module,exports){
-var HashTag = require('../Models/HashTag');
-var Backbone = require('backbone');
-var LocalStorage = require('backbone.localstorage');
-
-HashTagList = Backbone.Collection.extend({
-  model: HashTag,
-
-  localStorage: new LocalStorage("backbone-hashtags")
-
-});
-
-module.exports = HashTagList;
-
-},{"../Models/HashTag":3,"backbone":8,"backbone.localstorage":7}],3:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 
-HashTag = Backbone.Model.extend({
+ConvertedText = Backbone.Model.extend({
   defaults: {
     text: ''
   }
 });
 
-module.exports = HashTag;
+module.exports = ConvertedText;
 
-},{"backbone":8}],4:[function(require,module,exports){
+},{"backbone":10}],4:[function(require,module,exports){
+var Backbone = require('backbone');
+
+var TextCount = Backbone.Model.extend({
+  defaults: {
+    count: 40,
+  },
+
+  url: "http://localhost:8000",
+
+  decrement: function() {
+    this.save({
+      count: this.get('count') - 1
+    });
+  },
+
+  increment: function() {
+    this.save({
+      count: this.get('count') + 1
+    });
+  },
+
+  reset: function() {
+    this.save({
+      count: 40
+    });
+  }
+});
+
+module.exports = TextCount;
+
+},{"backbone":10}],5:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var HashTagView = require('./HashTagView');
-var Actions = require('../Actions');
+var ConvertedTextView= require('./ConvertedTextView');
+var Hashtagify = require('../Hashtagify');
+var TextCount = require('../Models/TextCount');
+var TextCountView = require('./TextCountView');
 
+var KEY_ENTER = 13;
+var KEY_DELETE = 46;
+var KEY_BACKSPACE = 8;
 
 var AppView = Backbone.View.extend({
   el: '#hashtagity',
 
   events: {
-    'keypress #new-hash-tag': 'createOnEnter',
-    'click #create-hash' : 'createHash'
+    'keyup #new-hash-tag' : 'handleTextAreaKeyUp',
+    'click #create-hash' : 'handleConvertTextClick'
   },
 
   initialize: function () {
     this.input = this.$('#new-hash-tag');
-    this.collection.on('add', this.addOne, this);
+    this.addTextCountView();
+    this.collection.on('add', this.addConvertedTextView, this);
     this.collection.fetch();
   },
 
-  createHash : function() {
+  handleConvertTextClick: function(event) {
+    if (this.input.val().trim().length <= 40) {
+      this.convertText();
+    } else {
+      this.input.addClass('error');
+      return;
+    }
+  },
+
+  handleTextAreaKeyUp: function(event) {
+    this.input.removeClass('error');
+
+    var didNotPressEnter = event.which !== KEY_ENTER;
+    var pressedDeleteKey = event.which === KEY_DELETE;
+    var pressedBackSpaceKey = event.which === KEY_BACKSPACE;
+    var isEmptyText = !this.input.val().trim();
+
+    if (pressedBackSpaceKey) {
+      this.textCountView.handleIncrementCounter()
+    } else {
+      this.textCountView.handleDecrementCounter();
+    }
+
+    if (isEmptyText) {
+      this.textCountView.handleResetCounter();
+    }
+
+    if (didNotPressEnter || isEmptyText) {
+      return;
+    }
+
+    if (this.input.val().trim().length <= 40) {
+        this.convertText();
+    } else {
+      this.input.addClass('error');
+      return;
+    }
+  },
+
+  convertText: function() {
     var hashType = this.$('.hash-type:checked').val();
     var convertedText = null;
     var textToConvert = this.input.val().trim();
-    switch(hashType) {
-      case 'singleHash':
-        convertedText = Actions.singleHash(textToConvert)
-      case 'shrinkify':
-        convertedText = Actions.shrinkify(textToConvert);
-      case 'hashEvery':
-        convertedText = Actions.hashEvery(textToConvert);
+
+    if (hashType === 'singleHash') {
+      convertedText = Hashtagify.singleHash(textToConvert);
     }
-    this.collection.create({text: convertedText});
+    if (hashType === 'shrinkify') {
+      convertedText = Hashtagify.shrinkify(textToConvert);
+    }
+    if (hashType === 'hashEvery') {
+      convertedText = Hashtagify.hashEvery(textToConvert);
+    }
+    if(convertedText !== null || convertedText !== undefined) {
+      this.collection.create({text: convertedText});
+    }
     this.input.val('');
   },
 
-  createOnEnter: function(e){
-    if ( e.which !== 13 || !this.input.val().trim() ) {
-      return;
-    }
-    this.createHash();
+  addConvertedTextView: function(hashTag){
+    var view = new ConvertedTextView({model: hashTag});
+    this.$('#hash-tag-list').append(view.render().el);
+    this.addTextCountView();
   },
 
-  addOne: function(hashTag){
-    var view = new HashTagView({model: hashTag});
-    $('#hash-tag-list').append(view.render().el);
+  addTextCountView: function() {
+    var textCount = new TextCount();
+    var textCountView = new TextCountView({model: textCount});
+    this.$('.text-count').append(textCountView.render().el);
+    this.textCountView = textCountView;
   }
 });
 
 module.exports = AppView;
 
-},{"../Actions":1,"./HashTagView":5,"backbone":8,"jquery":9,"underscore":10}],5:[function(require,module,exports){
+},{"../Hashtagify":2,"../Models/TextCount":4,"./ConvertedTextView":6,"./TextCountView":7,"backbone":10,"jquery":11,"underscore":12}],6:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 
-HashTagView = Backbone.View.extend({
+var KEY_ENTER = 13;
+
+ConvertedTextView = Backbone.View.extend({
   tagName: 'li',
 
   template: _.template($('#hash-tag-template').html()),
 
   events: {
-    'dblclick label' : 'edit',
-    'keypress .edit' : 'updateOnEnter',
+    'dblclick label' : 'handleUpdateEvent',
+    'click .edit-icon': 'handleUpdateEvent',
+    'keypress .edit' : 'handleUpdateEvent',
+    'mouseover .edit-icon': 'handleShowIconDescription',
+    'mouseover .destroy': 'handleShowIconDescription',
     'blur .edit' : 'close',
-    'click .destroy': 'destroy',
-    'mouseover .delete': 'showDestroy'
+    'click .editing' : 'close',
+    'click .destroy': 'destroy'
   },
 
-  showDestroy: function() {
-    this.$el.removeClass('delete');
-    this.$el.addClass('deleting')
+  initialize: function(){
+    this.model.on('change', this.render, this);
+    this.model.on('destroy', this.remove, this);
   },
 
   render: function(){
@@ -139,28 +225,34 @@ HashTagView = Backbone.View.extend({
     return this;
   },
 
-  initialize: function(){
-    this.model.on('change', this.render, this);
-    this.model.on('destroy', this.remove, this);
+  handleShowIconDescription: function(event) {
+    var getMessage = event.currentTarget.nextSibling.innerText;
+    var getElement = event.currentTarget.nextSibling;
+
+    if (getMessage === 'delete') {
+    console.log(getElement)
+    }
+    else if (getMessage === 'edit') {
+      getElement.removeClass('hide-edit');
+      getElement.addClass('show-edit');
+    }
   },
 
-  edit: function(){
+  handleUpdateEvent: function() {
     this.$el.addClass('editing');
     this.input.focus();
+    if(event.which === KEY_ENTER) {
+      this.close();
+    }
   },
 
   close: function(){
     var text = this.input.val().trim();
-    if(text) {
+    var hasText = text ? true : false;
+    if(hasText) {
       this.model.save({text: text});
     }
     this.$el.removeClass('editing');
-  },
-
-  updateOnEnter: function(e){
-    if(e.which == 13){
-      this.close();
-    }
   },
 
   destroy: function(){
@@ -168,15 +260,56 @@ HashTagView = Backbone.View.extend({
   }
 });
 
-module.exports = HashTagView;
+module.exports = ConvertedTextView;
 
-},{"backbone":8,"jquery":9,"underscore":10}],6:[function(require,module,exports){
-var HashTagList = require('./Collections/HashTags');
+},{"backbone":10,"jquery":11,"underscore":12}],7:[function(require,module,exports){
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+
+var TextCountView = Backbone.View.extend({
+    el: '.text-count',
+
+    template: _.template($('#text-count-template').html()),
+
+    initialize: function() {
+      this.textCounter = this.$('text-counter');
+      this.model.on('change', this.render, this)
+    },
+
+    render: function() {
+      this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    },
+
+    handleDecrementCounter: function() {
+      this.model.decrement();
+
+    },
+
+    handleIncrementCounter: function() {
+      this.model.increment();
+
+    },
+
+    handleResetCounter: function() {
+      this.model.reset();
+    }
+});
+
+module.exports = TextCountView;
+
+},{"backbone":10,"jquery":11,"underscore":12}],8:[function(require,module,exports){
+var ConvertedTextList = require('./Collections/ConvertedTextList');
 var AppView = require('./Views/AppView');
-var hashTagList = new HashTagList();
-var appView = new AppView({collection: hashTagList});
+var TextCount = require('./Models/TextCount');
+var TextCountView = require('./Views/TextCountView');
 
-},{"./Collections/HashTags":2,"./Views/AppView":4}],7:[function(require,module,exports){
+
+var convertedTextList = new ConvertedTextList();
+var appView = new AppView({collection: convertedTextList});
+
+},{"./Collections/ConvertedTextList":1,"./Models/TextCount":4,"./Views/AppView":5,"./Views/TextCountView":7}],9:[function(require,module,exports){
 /**
  * Backbone localStorage Adapter
  * Version 1.1.16
@@ -436,7 +569,7 @@ Backbone.sync = function(method, model, options) {
 return Backbone.LocalStorage;
 }));
 
-},{"backbone":8}],8:[function(require,module,exports){
+},{"backbone":10}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -2313,7 +2446,7 @@ return Backbone.LocalStorage;
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":9,"underscore":10}],9:[function(require,module,exports){
+},{"jquery":11,"underscore":12}],11:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11525,7 +11658,7 @@ return jQuery;
 
 }));
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13075,4 +13208,4 @@ return jQuery;
   }
 }.call(this));
 
-},{}]},{},[6]);
+},{}]},{},[8]);

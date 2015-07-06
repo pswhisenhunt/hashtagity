@@ -1,3 +1,4 @@
+/* TODO: prefix these with color- so that you whats a color, same for fonts */
 $primary-color: #DCFF00;
 $secondary-color: rgba(62, 17, 66, 0.75);
 $orange: #E9AB3B;
@@ -8,6 +9,14 @@ font-family: 'Fredoka One', cursive;
 font-family: 'Chewy', cursive;
 font-family: 'Advent Pro', sans-serif;
 font-family: 'Marvel', sans-serif; */
+
+/* TODO: dont style tags / elements directly.
+  put a line of whitespace between presetnationl and structural styles.
+  dont use class naemes that describe the content.
+  nesting is OK i guess, but you cant re-use nested classes really that well and your
+  styles are directly coupled to the DOM. im not a fan of nesting really.
+  i find using a unique class name for each thing actually works pretty well
+*/
 body {
   background-color: $secondary-color;
   font-family: $body-font;
@@ -26,6 +35,10 @@ body {
     margin-left: 28%;
     margin-right: 30%;
     padding: 10px;
+  }
+  .text-counter {
+    float: right;
+    margin-right: 200px;
   }
   .new-hash-tag {
     width:65%;
@@ -66,10 +79,16 @@ body {
       i {
         font-size: 32px;
       }
-      .delete {
+      .hide-delete {
         display: none;
       }
-      .deleting {
+      .show-delete {
+        display: inline;
+      }
+      .hide-edit {
+        display: none;
+      }
+      .show-edit {
         display: inline;
       }
     }
@@ -87,4 +106,13 @@ body {
     font-family: $body-font;
     display: inline;
   }
+}
+
+.error {
+  color: red;
+  font-size: 24px;
+}
+
+.icons a {
+ color: black;
 }

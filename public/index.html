@@ -12,12 +12,13 @@
         <h1 class="header">#Hastagity</h1>
       </header>
       <main>
-        <textarea id="new-hash-tag" class="new-hash-tag" autofocus></textarea>
         <div class="hash-options">
           <input type="radio" name="hash-type" class="hash-type" value="singleHash" checked> Single Hash
           <input type="radio" name="hash-type" class="hash-type" value="shrinkify"> Shrinkify
           <input type="radio" name="hash-type" class="hash-type" value="hashEvery"> Hash Every Word
         </div>
+        <span class="text-count"></span>
+        <textarea id="new-hash-tag" class="new-hash-tag" autofocus></textarea>
         <button id="create-hash" class="create-hash">DO IT</button>
       </main>
       <section id="main">
@@ -31,13 +32,15 @@
         <label><%- text %></label>
         <input class="edit" value="<%- text %>">
         <nav class="icons">
-          <i class="fa fa-pencil-square"></i>
-          <i class="fa fa-times destroy"></i><span class="delete">delete</span>
-          <i class="fa fa-clipboard"></i>
-          <i class="fa fa-twitter-square"></i>
-          <i class="fa fa-facebook-square"></i>
+          <i class="fa fa-pencil-square edit-icon"></i><span class="hide-edit">edit</span>
+          <i class="fa fa-times destroy"></i><span class="hide-delete">delete</span>
+          <a href="http://www.twitter.com"><i class="fa fa-twitter-square twitter-icon"></i></a>
+          <a href="http://www.facebook.com"><i class="fa fa-facebook-square facebook-icon"></i></a>
         </nav>
       </div>
+    </script>
+    <script type="text/template" id="text-count-template">
+      <p class="text-counter"><%- count %></p>
     </script>
     <footer class="footer"></footer>
     <script src="bundle.js"></script>

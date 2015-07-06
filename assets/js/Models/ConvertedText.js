@@ -1,9 +1,9 @@
 var Backbone = require('backbone');
 
-HashTag = Backbone.Model.extend({
+ConvertedText = Backbone.Model.extend({
   defaults: {
     text: ''
   }
 });
 
-module.exports = HashTag;
+module.exports = ConvertedText;

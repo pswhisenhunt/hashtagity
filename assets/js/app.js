@@ -1,4 +1,8 @@
-var HashTagList = require('./Collections/HashTags');
+var ConvertedTextList = require('./Collections/ConvertedTextList');
 var AppView = require('./Views/AppView');
-var hashTagList = new HashTagList();
-var appView = new AppView({collection: hashTagList});
+var TextCount = require('./Models/TextCount');
+var TextCountView = require('./Views/TextCountView');
+
+
+var convertedTextList = new ConvertedTextList();
+var appView = new AppView({collection: convertedTextList});

@@ -1,53 +1,100 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var HashTagView = require('./HashTagView');
-var Actions = require('../Actions');
+var ConvertedTextView= require('./ConvertedTextView');
+var Hashtagify = require('../Hashtagify');
+var TextCount = require('../Models/TextCount');
+var TextCountView = require('./TextCountView');
+
 var KEY_ENTER = 13;
+var KEY_DELETE = 46;
+var KEY_BACKSPACE = 8;
 
 var AppView = Backbone.View.extend({
   el: '#hashtagity',
 
   events: {
-    'keypress #new-hash-tag': 'createOnEnter',
-    'click #create-hash' : 'createHash'
+    'keyup #new-hash-tag' : 'handleTextAreaKeyUp',
+    'click #create-hash' : 'handleConvertTextClick'
   },
 
   initialize: function () {
     this.input = this.$('#new-hash-tag');
-    this.collection.on('add', this.addOne, this);
+    this.addTextCountView();
+    this.collection.on('add', this.addConvertedTextView, this);
     this.collection.fetch();
   },
 
-  createHash : function() {
+  handleConvertTextClick: function(event) {
+    if (this.input.val().trim().length <= 40) {
+      this.convertText();
+    } else {
+      this.input.addClass('error');
+      return;
+    }
+  },
+
+  handleTextAreaKeyUp: function(event) {
+    this.input.removeClass('error');
+
+    var didNotPressEnter = event.which !== KEY_ENTER;
+    var pressedDeleteKey = event.which === KEY_DELETE;
+    var pressedBackSpaceKey = event.which === KEY_BACKSPACE;
+    var isEmptyText = !this.input.val().trim();
+
+    if (pressedBackSpaceKey) {
+      this.textCountView.handleIncrementCounter()
+    } else {
+      this.textCountView.handleDecrementCounter();
+    }
+
+    if (isEmptyText) {
+      this.textCountView.handleResetCounter();
+    }
+
+    if (didNotPressEnter || isEmptyText) {
+      return;
+    }
+
+    if (this.input.val().trim().length <= 40) {
+        this.convertText();
+    } else {
+      this.input.addClass('error');
+      return;
+    }
+  },
+
+  convertText: function() {
     var hashType = this.$('.hash-type:checked').val();
     var convertedText = null;
     var textToConvert = this.input.val().trim();
 
-    switch(hashType) {
-      case 'singleHash':
-        convertedText = Actions.singleHash(textToConvert)
-      case 'shrinkify':
-        convertedText = Actions.shrinkify(textToConvert);
-      case 'hashEvery':
-        convertedText = Actions.hashEvery(textToConvert);
+    if (hashType === 'singleHash') {
+      convertedText = Hashtagify.singleHash(textToConvert);
     }
-    this.collection.create({text: convertedText});
+    if (hashType === 'shrinkify') {
+      convertedText = Hashtagify.shrinkify(textToConvert);
+    }
+    if (hashType === 'hashEvery') {
+      convertedText = Hashtagify.hashEvery(textToConvert);
+    }
+    if(convertedText !== null || convertedText !== undefined) {
+      this.collection.create({text: convertedText});
+    }
     this.input.val('');
   },
 
-  createOnEnter: function(e){
-    var didNotPressEnter = e.which !== KEY_ENTER;
-    var isEmptyText = !this.input.val().trim();
-    if (didNotPressEnter || isEmptyText) {
-      return;
-    }
-    this.createHash();
+  addConvertedTextView: function(hashTag){
+    var view = new ConvertedTextView({model: hashTag});
+    this.$('#hash-tag-list').append(view.render().el);
+    this.addTextCountView();
   },
 
-  addOne: function(hashTag){
-    var view = new HashTagView({model: hashTag});
-    this.$('#hash-tag-list').append(view.render().el);
+  addTextCountView: function() {
+    var textCount = new TextCount();
+    var textCountView = new TextCountView({model: textCount});
+    this.$('.text-count').append(textCountView.render().el);
+    this.textCountView = textCountView;
   }
 });
 
