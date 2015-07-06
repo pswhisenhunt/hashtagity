@@ -1,14 +1,8 @@
-/* TODO: prefix these with color- so that you whats a color, same for fonts */
-$primary-color: #DCFF00;
-$secondary-color: rgba(62, 17, 66, 0.75);
-$orange: #E9AB3B;
-$heading-font: 'Fredoka One', monospace;
-$body-font: 'Marvel', sans-serif; ;
-/* font-family: 'News Cycle', sans-serif;
-font-family: 'Fredoka One', cursive;
-font-family: 'Chewy', cursive;
-font-family: 'Advent Pro', sans-serif;
-font-family: 'Marvel', sans-serif; */
+$color-secondary: rgba(62, 17, 66, 0.75);
+$color-orange: #E9AB3B;
+$font-heading: 'Fredoka One', monospace;
+$font-body: 'Marvel', sans-serif; ;
+
 
 /* TODO: dont style tags / elements directly.
   put a line of whitespace between presetnationl and structural styles.
@@ -17,9 +11,9 @@ font-family: 'Marvel', sans-serif; */
   styles are directly coupled to the DOM. im not a fan of nesting really.
   i find using a unique class name for each thing actually works pretty well
 */
-body {
-  background-color: $secondary-color;
-  font-family: $body-font;
+.hashtagity-body {
+  background-color: $color-secondary;
+  font-family: $font-body;
   font-size: 24px;
 
   .hashtagity {
@@ -28,8 +22,8 @@ body {
   }
 
   .hashtagity h1 {
-    color: $orange;
-    font-family: $heading-font;
+    color: $color-orange;
+    font-family: $font-heading;
     letter-spacing: 14px;
     font-size: 86px;
     margin-left: 28%;
@@ -42,12 +36,12 @@ body {
   }
   .new-hash-tag {
     width:65%;
-    height: 60%;
+    height: 30%;
     margin-left: 20%;
     margin-right: 20%;
     padding: 10px;
     font-size: 22px;
-    font-family: $body-font;
+    font-family: $font-body;
   }
   .hash-options {
     width:65%;
@@ -65,9 +59,9 @@ body {
     border: none;
     border-radius: 10px;
     font-size: 34;
-    font-family: $heading-font;
-    background-color: $orange;
-    color: $secondary-color;
+    font-family: $font-heading;
+    background-color: $color-orange;
+    color: $color-secondary;
   }
   .hashtagity ul {
     list-style-type: none;
@@ -79,17 +73,8 @@ body {
       i {
         font-size: 32px;
       }
-      .hide-delete {
-        display: none;
-      }
-      .show-delete {
-        display: inline;
-      }
-      .hide-edit {
-        display: none;
-      }
-      .show-edit {
-        display: inline;
+      a {
+       color: black;
       }
     }
   }
@@ -103,7 +88,7 @@ body {
     width: 200px;
     height: 50px;
     font-size: 22px;
-    font-family: $body-font;
+    font-family: $font-body;
     display: inline;
   }
 }
@@ -111,8 +96,4 @@ body {
 .error {
   color: red;
   font-size: 24px;
-}
-
-.icons a {
- color: black;
 }

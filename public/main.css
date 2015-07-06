@@ -1,9 +1,3 @@
-/* TODO: prefix these with color- so that you whats a color, same for fonts */
-/* font-family: 'News Cycle', sans-serif;
-font-family: 'Fredoka One', cursive;
-font-family: 'Chewy', cursive;
-font-family: 'Advent Pro', sans-serif;
-font-family: 'Marvel', sans-serif; */
 /* TODO: dont style tags / elements directly.
   put a line of whitespace between presetnationl and structural styles.
   dont use class naemes that describe the content.
@@ -11,14 +5,14 @@ font-family: 'Marvel', sans-serif; */
   styles are directly coupled to the DOM. im not a fan of nesting really.
   i find using a unique class name for each thing actually works pretty well
 */
-body {
+.hashtagity-body {
   background-color: rgba(62, 17, 66, 0.75);
   font-family: "Marvel", sans-serif;
   font-size: 24px; }
-  body .hashtagity {
+  .hashtagity-body .hashtagity {
     width: 90%;
     margin: 0 auto; }
-  body .hashtagity h1 {
+  .hashtagity-body .hashtagity h1 {
     color: #E9AB3B;
     font-family: "Fredoka One", monospace;
     letter-spacing: 14px;
@@ -26,25 +20,25 @@ body {
     margin-left: 28%;
     margin-right: 30%;
     padding: 10px; }
-  body .text-counter {
+  .hashtagity-body .text-counter {
     float: right;
     margin-right: 200px; }
-  body .new-hash-tag {
+  .hashtagity-body .new-hash-tag {
     width: 65%;
-    height: 60%;
+    height: 30%;
     margin-left: 20%;
     margin-right: 20%;
     padding: 10px;
     font-size: 22px;
     font-family: "Marvel", sans-serif; }
-  body .hash-options {
+  .hashtagity-body .hash-options {
     width: 65%;
     margin-left: 35%;
     margin-right: 35%;
     padding: 10px;
     font-size: 26px;
     color: black; }
-  body .create-hash {
+  .hashtagity-body .create-hash {
     width: 450px;
     height: 50px;
     margin-left: 35%;
@@ -55,25 +49,19 @@ body {
     font-family: "Fredoka One", monospace;
     background-color: #E9AB3B;
     color: rgba(62, 17, 66, 0.75); }
-  body .hashtagity ul {
+  .hashtagity-body .hashtagity ul {
     list-style-type: none; }
-    body .hashtagity ul li {
+    .hashtagity-body .hashtagity ul li {
       font-size: 36px; }
-    body .hashtagity ul .icons i {
+    .hashtagity-body .hashtagity ul .icons i {
       font-size: 32px; }
-    body .hashtagity ul .icons .hide-delete {
-      display: none; }
-    body .hashtagity ul .icons .show-delete {
-      display: inline; }
-    body .hashtagity ul .icons .hide-edit {
-      display: none; }
-    body .hashtagity ul .icons .show-edit {
-      display: inline; }
-  body .hash-tag-list input.edit {
+    .hashtagity-body .hashtagity ul .icons a {
+      color: black; }
+  .hashtagity-body .hash-tag-list input.edit {
     display: none; }
-  body .hash-tag-list .editing label {
+  .hashtagity-body .hash-tag-list .editing label {
     display: none; }
-  body .hash-tag-list .editing input.edit {
+  .hashtagity-body .hash-tag-list .editing input.edit {
     width: 200px;
     height: 50px;
     font-size: 22px;
@@ -83,8 +71,5 @@ body {
 .error {
   color: red;
   font-size: 24px; }
-
-.icons a {
-  color: black; }
 
 /*# sourceMappingURL=main.css.map */
