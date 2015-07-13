@@ -1,7 +1,7 @@
 .hashtagity-body {
   font-family: "Marvel", sans-serif;
   font-size: 28px;
-  background: linear-gradient(0deg, lightgrey, grey 40%, rgba(62, 17, 66, 0.75)); }
+  /*   background: linear-gradient( 0deg, lightgrey, grey 40%, $color-secondary ); */ }
 
 .hashtagity-section {
   width: 90%;
@@ -9,7 +9,7 @@
   margin-top: 100px; }
 
 .hashtagity-title {
-  color: #E9AB3B;
+  color: rgba(62, 17, 66, 0.75);
   font-family: "Kranky", monospace;
   letter-spacing: 14px;
   font-size: 60px;
@@ -18,20 +18,24 @@
 
 .text-counter {
   float: right;
-  margin-right: 350px;
-  margin-top: -50px;
-  font-family: "Kranky", monospace; }
+  margin-right: 300px;
+  margin-top: -90px;
+  width: 100px;
+  padding: 0px;
+  font-family: "Kranky", monospace;
+  font-size: 19px; }
 
 .hashtaigty-textarea {
   width: 50%;
   height: 8%;
   margin-left: 25%;
   margin-right: 25%;
+  margin-top: -30px;
   padding: 10px;
   font-size: 26px;
   font-family: "Marvel", sans-serif;
   border-radius: 10px;
-  border: none; }
+  border: 2px solid rgba(62, 17, 66, 0.4); }
 
 .hashtaigty-textarea:focus {
   outline-offset: 0;
@@ -50,6 +54,7 @@
   height: 50px;
   margin-left: 42%;
   margin-top: 10px;
+  display: none;
   background: rgba(62, 17, 66, 0.4);
   font-size: 32px;
   font-family: "Kranky", monospace;
@@ -61,12 +66,13 @@
 .hashtagity-list {
   list-style-type: none; }
 
-.hashtagity-li {
-  font-size: 36px; }
-  .hashtagity-li .icons .icon {
-    font-size: 32px;
-    color: rgba(62, 17, 66, 0.75); }
-  .hashtagity-li .icons .icon-link {
+.view {
+  font-size: 24px;
+  padding-bottom: 10px; }
+
+.icons {
+  color: rgba(62, 17, 66, 0.4); }
+  .icons .icon-link {
     color: rgba(62, 17, 66, 0.75); }
 
 .hashtagity-list input.edit {
