@@ -36,7 +36,6 @@ var AppView = Backbone.View.extend({
 
   handleTextAreaKeyUp: function(event) {
     this.input.removeClass('error');
-
     var didNotPressEnter = event.which !== KEY_ENTER;
     var pressedDeleteKey = event.which === KEY_DELETE;
     var pressedBackSpaceKey = event.which === KEY_BACKSPACE;
