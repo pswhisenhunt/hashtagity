@@ -7,6 +7,8 @@ var KEY_ENTER = 13;
 ConvertedTextView = Backbone.View.extend({
   tagName: 'li',
 
+  className: 'hashtagity-li',
+
   template: _.template($('#hash-tag-template').html()),
 
   events: {
@@ -28,7 +30,7 @@ ConvertedTextView = Backbone.View.extend({
     this.input = this.$('.edit');
     return this;
   },
-  
+
   handleUpdateEvent: function() {
     this.$el.addClass('editing');
     this.input.focus();

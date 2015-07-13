@@ -19,6 +19,14 @@ module.exports = function(grunt){
           'public/main.css': 'assets/scss/main.scss'
         }
       }
+    },
+    mochaTest: {
+      test: {
+        options: {
+          clearRequireCache: false
+        },
+        src: ['test/**/*.test.js']
+      }
     }
   });
 

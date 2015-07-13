@@ -65,7 +65,7 @@ var AppView = Backbone.View.extend({
   },
 
   convertText: function() {
-    var hashType = this.$('.hash-type:checked').val();
+    var hashType = this.$('.hashtagity-hash-type-input:checked').val();
     var convertedText = null;
     var textToConvert = this.input.val().trim();
 

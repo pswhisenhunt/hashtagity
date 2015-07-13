@@ -4,38 +4,37 @@
     <title>Hashtagity!</title>
     <link href='http://fonts.googleapis.com/css?family=News+Cycle|Fredoka+One|Chewy|Advent+Pro|Marvel' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+     <link href='http://fonts.googleapis.com/css?family=Lekton|Ubuntu+Mono|PT+Mono|Nova+Mono|Advent+Pro|Kranky' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="main.css"></link>
   </head>
   <body class="hashtagity-body">
-    <section id="hashtagity" class="hashtagity">
-      <header>
-        <h1 class="header">#Hastagity</h1>
-      </header>
+    <section id="hashtagity" class="hashtagity-section">
       <main>
-        <div class="hash-options">
-          <input type="radio" name="hash-type" class="hash-type" value="singleHash" checked> Single Hash
-          <input type="radio" name="hash-type" class="hash-type" value="shrinkify"> Shrinkify
-          <input type="radio" name="hash-type" class="hash-type" value="hashEvery"> Hash Every Word
-        </div>
+        <h1 class="hashtagity-title" class="header">#Hastagity</h1>
         <span class="text-count"></span>
-        <textarea id="new-hash-tag" class="new-hash-tag" autofocus></textarea>
-        <button id="create-hash" class="create-hash">DO IT</button>
+        <textarea id="new-hash-tag" class="hashtaigty-textarea" autofocus></textarea>
+        <div class="hashtagity-options">
+          <input type="radio" name="hash-type" class="hashtagity-hash-type-input" value="singleHash" checked> Single Hash
+          <input type="radio" name="hash-type" class="hashtagity-hash-type-input" value="shrinkify"> Shrinkify
+          <input type="radio" name="hash-type" class="hashtagity-hash-type-input" value="hashEvery"> Hash Every Word
+        </div>
+        <button id="create-hash" class="hashtagity-convertText-button">DO IT</button>
       </main>
       <section id="main">
-        <ul id="hash-tag-list" class="hash-tag-list"></ul>
+        <ul id="hash-tag-list" class="hashtagity-list"></ul>
       </section>
     </section>
 
     <!-- Templates -->
     <script type="text/template" id="hash-tag-template" class="hash-tag-template">
       <div class="view">
-        <label><%- text %></label>
+        <label class="edit-text"><%- text %></label>
         <input class="edit" value="<%- text %>">
         <nav class="icons">
-          <i class="fa fa-pencil-square edit-icon"></i>
-          <i class="fa fa-times destroy"></i>
-          <a href="http://www.twitter.com"><i class="fa fa-twitter-square twitter-icon"></i></a>
-          <a href="http://www.facebook.com"><i class="fa fa-facebook-square facebook-icon"></i></a>
+          <i class="fa fa-pencil-square edit-icon icon"></i>
+          <i class="fa fa-times destroy icon"></i>
+          <a href="http://www.twitter.com" class="icon-link"><i class="fa fa-twitter-square icon"></i></a>
+          <a href="http://www.facebook.com" class="icon-link"><i class="fa fa-facebook-square icon"></i></a>
         </nav>
       </div>
     </script>
