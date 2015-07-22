@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var HashTag = require('../Models/ConvertedText');
+var ConvertedText = require('../Models/ConvertedText');
 var Backbone = require('backbone');
 var LocalStorage = require('backbone.localstorage');
 
@@ -18,7 +18,7 @@ var Hashtagify = {
     return '#' + text;
   },
 
-  shrinkify: function(text) {
+  acryonymify: function(text) {
     text = text.split(' ');
     for (var i = 0; i <= text.length-1; i++) {
       if (text[i] === 'are') {
@@ -41,6 +41,45 @@ var Hashtagify = {
       text[i] = '#' + text[i];
     }
     return text.join(' ');
+  },
+
+  shrinkify: function(text) {
+    var acceptableShortenWords = {
+      'how': 'hw',
+      'are': 'r',
+      'you': 'u',
+      'to': '2',
+      'too': '2',
+      'two': '2',
+      'tomorrow': '2morrow',
+      'love': 'luv',
+      'night': 'nite',
+      'tonight': '2nite',
+      'today': '2day',
+      'good': 'g\'',
+      'cutie': 'QT',
+      'because': 'bc',
+      'whatever': 'w/e',
+      'what': 'wat',
+      'see': 'c',
+      'later': 'lata',
+      'for': '4',
+      'before': 'b4',
+      'be': 'b',
+      'information': 'info',
+      'in': 'n'
+    }
+    text = text.split(' ');
+    var shortenedSentence = '';
+    for(var i = 0; i < text.length; i++) {
+      if (acceptableShortenWords.hasOwnProperty(text[i])) {
+        shortenedSentence += acceptableShortenWords[text[i]] + ' ';
+      }
+      else {
+        shortenedSentence += text[i] + ' ';
+      }
+    }
+    return '#' + shortenedSentence.trim();
   }
 }
 
@@ -68,6 +107,7 @@ var TextCount = Backbone.Model.extend({
   url: "http://localhost:8000",
 
   decrement: function() {
+    // set instead of save
     this.save({
       count: this.get('count') - 1
     });
@@ -106,28 +146,38 @@ var AppView = Backbone.View.extend({
 
   events: {
     'keyup #new-hash-tag' : 'handleTextAreaKeyUp',
-    'click #create-hash' : 'handleConvertTextClick'
+    'click #create-hash' : 'handleConvertTextClick',
+    'focus #new-hash-tag' : 'handleClearError'
   },
 
   initialize: function () {
     this.input = this.$('#new-hash-tag');
+    this.$error = this.$('.error');
     this.addTextCountView();
     this.collection.on('add', this.addConvertedTextView, this);
     this.collection.fetch();
   },
 
+  handleClearError: function() {
+    this.$error[0].innerHTML = '';
+  },
+
   handleConvertTextClick: function(event) {
-    if (this.input.val().trim().length <= 40) {
-      this.convertText();
-    } else {
-      this.input.addClass('error');
+    if (!this.input.val()) {
+      this.$error[0].innerHTML = 'There\'s no text to do anything with!';
       return;
+    } else {
+      if (this.input.val().trim().length <= 40) {
+        this.convertText();
+      } else {
+        this.input.addClass('error');
+        return;
+      }
     }
   },
 
   handleTextAreaKeyUp: function(event) {
     this.input.removeClass('error');
-
     var didNotPressEnter = event.which !== KEY_ENTER;
     var pressedDeleteKey = event.which === KEY_DELETE;
     var pressedBackSpaceKey = event.which === KEY_BACKSPACE;
@@ -163,14 +213,20 @@ var AppView = Backbone.View.extend({
     if (hashType === 'singleHash') {
       convertedText = Hashtagify.singleHash(textToConvert);
     }
-    if (hashType === 'shrinkify') {
-      convertedText = Hashtagify.shrinkify(textToConvert);
+    if (hashType === 'acryonymify') {
+      convertedText = Hashtagify.acryonymify(textToConvert);
     }
     if (hashType === 'hashEvery') {
       convertedText = Hashtagify.hashEvery(textToConvert);
     }
+    if (hashType === 'shrinkify') {
+      convertedText = Hashtagify.shrinkify(textToConvert);
+    }
     if(convertedText !== null || convertedText !== undefined) {
       this.collection.create({text: convertedText});
+    }
+    else {
+      return;
     }
     this.input.val('');
   },
