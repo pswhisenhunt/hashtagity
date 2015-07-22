@@ -8,6 +8,7 @@ var TextCount = Backbone.Model.extend({
   url: "http://localhost:8000",
 
   decrement: function() {
+    // set instead of save
     this.save({
       count: this.get('count') - 1
     });

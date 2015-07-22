@@ -1,4 +1,4 @@
-var HashTag = require('../Models/ConvertedText');
+var ConvertedText = require('../Models/ConvertedText');
 var Backbone = require('backbone');
 var LocalStorage = require('backbone.localstorage');
 
