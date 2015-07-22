@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var HashTag = require('../Models/ConvertedText');
+var ConvertedText = require('../Models/ConvertedText');
 var Backbone = require('backbone');
 var LocalStorage = require('backbone.localstorage');
 
@@ -18,7 +18,7 @@ var Hashtagify = {
     return '#' + text;
   },
 
-  shrinkify: function(text) {
+  acryonymify: function(text) {
     text = text.split(' ');
     for (var i = 0; i <= text.length-1; i++) {
       if (text[i] === 'are') {
@@ -41,6 +41,10 @@ var Hashtagify = {
       text[i] = '#' + text[i];
     }
     return text.join(' ');
+  },
+
+  shrinkify: function(text) {
+    
   }
 }
 
@@ -68,6 +72,7 @@ var TextCount = Backbone.Model.extend({
   url: "http://localhost:8000",
 
   decrement: function() {
+    // set instead of save
     this.save({
       count: this.get('count') - 1
     });
@@ -127,7 +132,6 @@ var AppView = Backbone.View.extend({
 
   handleTextAreaKeyUp: function(event) {
     this.input.removeClass('error');
-
     var didNotPressEnter = event.which !== KEY_ENTER;
     var pressedDeleteKey = event.which === KEY_DELETE;
     var pressedBackSpaceKey = event.which === KEY_BACKSPACE;
@@ -163,8 +167,8 @@ var AppView = Backbone.View.extend({
     if (hashType === 'singleHash') {
       convertedText = Hashtagify.singleHash(textToConvert);
     }
-    if (hashType === 'shrinkify') {
-      convertedText = Hashtagify.shrinkify(textToConvert);
+    if (hashType === 'acryonymify') {
+      convertedText = Hashtagify.acryonymify(textToConvert);
     }
     if (hashType === 'hashEvery') {
       convertedText = Hashtagify.hashEvery(textToConvert);

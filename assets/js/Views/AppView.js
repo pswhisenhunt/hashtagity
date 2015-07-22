@@ -71,8 +71,8 @@ var AppView = Backbone.View.extend({
     if (hashType === 'singleHash') {
       convertedText = Hashtagify.singleHash(textToConvert);
     }
-    if (hashType === 'shrinkify') {
-      convertedText = Hashtagify.shrinkify(textToConvert);
+    if (hashType === 'acryonymify') {
+      convertedText = Hashtagify.acryonymify(textToConvert);
     }
     if (hashType === 'hashEvery') {
       convertedText = Hashtagify.hashEvery(textToConvert);

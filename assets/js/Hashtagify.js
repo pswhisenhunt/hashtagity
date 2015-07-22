@@ -3,7 +3,7 @@ var Hashtagify = {
     return '#' + text;
   },
 
-  shrinkify: function(text) {
+  acryonymify: function(text) {
     text = text.split(' ');
     for (var i = 0; i <= text.length-1; i++) {
       if (text[i] === 'are') {
@@ -26,6 +26,45 @@ var Hashtagify = {
       text[i] = '#' + text[i];
     }
     return text.join(' ');
+  },
+
+  shrinkify: function(text) {
+    var acceptableShortenWords = {
+      'how': 'hw',
+      'are': 'r',
+      'you': 'u',
+      'to': '2',
+      'too': '2',
+      'two': '2',
+      'tomorrow': '2morrow',
+      'love': 'luv',
+      'night': 'nite',
+      'tonight': '2nite',
+      'today': '2day',
+      'good': 'g\'',
+      'cutie': 'QT',
+      'because': 'bc',
+      'whatever': 'w/e',
+      'what': 'wat',
+      'see': 'c',
+      'later': 'lata',
+      'for': '4',
+      'before': 'b4',
+      'be': 'b',
+      'information': 'info',
+      'in': 'n'
+    }
+    text = text.split(' ');
+    var shortenedSentence = '';
+    for(var i = 0; i < text.length; i++) {
+      if (acceptableShortenWords.hasOwnProperty(text[i])) {
+        shortenedSentence += acceptableShortenWords[text[i]] + ' ';
+      }
+      else {
+        shortenedSentence += text[i] + ' ';
+      }
+    }
+    return '#' + shortenedSentence.trim();
   }
 }
 
