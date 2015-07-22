@@ -15,22 +15,33 @@ var AppView = Backbone.View.extend({
 
   events: {
     'keyup #new-hash-tag' : 'handleTextAreaKeyUp',
-    'click #create-hash' : 'handleConvertTextClick'
+    'click #create-hash' : 'handleConvertTextClick',
+    'focus #new-hash-tag' : 'handleClearError'
   },
 
   initialize: function () {
     this.input = this.$('#new-hash-tag');
+    this.$error = this.$('.error');
     this.addTextCountView();
     this.collection.on('add', this.addConvertedTextView, this);
     this.collection.fetch();
   },
 
+  handleClearError: function() {
+    this.$error[0].innerHTML = '';
+  },
+
   handleConvertTextClick: function(event) {
-    if (this.input.val().trim().length <= 40) {
-      this.convertText();
-    } else {
-      this.input.addClass('error');
+    if (!this.input.val()) {
+      this.$error[0].innerHTML = 'There\'s no text to do anything with!';
       return;
+    } else {
+      if (this.input.val().trim().length <= 40) {
+        this.convertText();
+      } else {
+        this.input.addClass('error');
+        return;
+      }
     }
   },
 
@@ -77,8 +88,14 @@ var AppView = Backbone.View.extend({
     if (hashType === 'hashEvery') {
       convertedText = Hashtagify.hashEvery(textToConvert);
     }
+    if (hashType === 'shrinkify') {
+      convertedText = Hashtagify.shrinkify(textToConvert);
+    }
     if(convertedText !== null || convertedText !== undefined) {
       this.collection.create({text: convertedText});
+    }
+    else {
+      return;
     }
     this.input.val('');
   },

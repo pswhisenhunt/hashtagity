@@ -44,7 +44,42 @@ var Hashtagify = {
   },
 
   shrinkify: function(text) {
-    
+    var acceptableShortenWords = {
+      'how': 'hw',
+      'are': 'r',
+      'you': 'u',
+      'to': '2',
+      'too': '2',
+      'two': '2',
+      'tomorrow': '2morrow',
+      'love': 'luv',
+      'night': 'nite',
+      'tonight': '2nite',
+      'today': '2day',
+      'good': 'g\'',
+      'cutie': 'QT',
+      'because': 'bc',
+      'whatever': 'w/e',
+      'what': 'wat',
+      'see': 'c',
+      'later': 'lata',
+      'for': '4',
+      'before': 'b4',
+      'be': 'b',
+      'information': 'info',
+      'in': 'n'
+    }
+    text = text.split(' ');
+    var shortenedSentence = '';
+    for(var i = 0; i < text.length; i++) {
+      if (acceptableShortenWords.hasOwnProperty(text[i])) {
+        shortenedSentence += acceptableShortenWords[text[i]] + ' ';
+      }
+      else {
+        shortenedSentence += text[i] + ' ';
+      }
+    }
+    return '#' + shortenedSentence.trim();
   }
 }
 
@@ -111,22 +146,33 @@ var AppView = Backbone.View.extend({
 
   events: {
     'keyup #new-hash-tag' : 'handleTextAreaKeyUp',
-    'click #create-hash' : 'handleConvertTextClick'
+    'click #create-hash' : 'handleConvertTextClick',
+    'focus #new-hash-tag' : 'handleClearError'
   },
 
   initialize: function () {
     this.input = this.$('#new-hash-tag');
+    this.$error = this.$('.error');
     this.addTextCountView();
     this.collection.on('add', this.addConvertedTextView, this);
     this.collection.fetch();
   },
 
+  handleClearError: function() {
+    this.$error[0].innerHTML = '';
+  },
+
   handleConvertTextClick: function(event) {
-    if (this.input.val().trim().length <= 40) {
-      this.convertText();
-    } else {
-      this.input.addClass('error');
+    if (!this.input.val()) {
+      this.$error[0].innerHTML = 'There\'s no text to do anything with!';
       return;
+    } else {
+      if (this.input.val().trim().length <= 40) {
+        this.convertText();
+      } else {
+        this.input.addClass('error');
+        return;
+      }
     }
   },
 
@@ -173,8 +219,14 @@ var AppView = Backbone.View.extend({
     if (hashType === 'hashEvery') {
       convertedText = Hashtagify.hashEvery(textToConvert);
     }
+    if (hashType === 'shrinkify') {
+      convertedText = Hashtagify.shrinkify(textToConvert);
+    }
     if(convertedText !== null || convertedText !== undefined) {
       this.collection.create({text: convertedText});
+    }
+    else {
+      return;
     }
     this.input.val('');
   },
