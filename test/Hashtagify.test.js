@@ -75,6 +75,11 @@ describe('Hashtagify', function() {
         var seeYouTomorrowBooCorrectTestResult = '#c u 2morrow boo';
         var shrinkifySeeYouTomorrowBooTestSentence = Hashtagify.shrinkify(seeYouTomorrowBooTestSentence);
         assert.equal(seeYouTomorrowBooCorrectTestResult, shrinkifySeeYouTomorrowBooTestSentence);
+
+        var myNameIsJaneTestSentence = 'my name is Jane';
+        var myNameIsJaneCorrectTestSentence = '#my name is Jane';
+        var shrinkifyMyNameIsJaneTestSentence = Hashtagify.shrinkify(myNameIsJaneTestSentence);
+        assert.equal(myNameIsJaneCorrectTestSentence, shrinkifyMyNameIsJaneTestSentence);
       });
     });
   });
