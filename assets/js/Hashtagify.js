@@ -40,6 +40,7 @@ var Hashtagify = {
       'love': 'luv',
       'night': 'nite',
       'tonight': '2nite',
+      'doing': 'doin',
       'today': '2day',
       'good': 'g\'',
       'cutie': 'QT',
@@ -56,6 +57,15 @@ var Hashtagify = {
     }
     text = text.split(' ');
     var shortenedSentence = '';
+    var lastWordInSentence = text.pop()
+    var hasPunctation = lastWordInSentence.charAt(lastWordInSentence.length-1);
+    if (hasPunctation === '?' || hasPunctation === '.' || hasPunctation === '!' || hasPunctation === ';') {
+      lastWordInSentence = lastWordInSentence.substring(0, lastWordInSentence.length-1);
+      text.push(lastWordInSentence);
+    }
+    else {
+      text.push(lastWordInSentence);
+    }
     for(var i = 0; i < text.length; i++) {
       if (acceptableShortenWords.hasOwnProperty(text[i])) {
         shortenedSentence += acceptableShortenWords[text[i]] + ' ';
