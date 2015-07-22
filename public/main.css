@@ -1,72 +1,91 @@
-/* TODO: dont style tags / elements directly.
-  put a line of whitespace between presetnationl and structural styles.
-  dont use class naemes that describe the content.
-  nesting is OK i guess, but you cant re-use nested classes really that well and your
-  styles are directly coupled to the DOM. im not a fan of nesting really.
-  i find using a unique class name for each thing actually works pretty well
-*/
 .hashtagity-body {
-  background-color: rgba(62, 17, 66, 0.75);
   font-family: "Marvel", sans-serif;
-  font-size: 24px; }
-  .hashtagity-body .hashtagity {
-    width: 90%;
-    margin: 0 auto; }
-  .hashtagity-body .hashtagity h1 {
-    color: #E9AB3B;
-    font-family: "Fredoka One", monospace;
-    letter-spacing: 14px;
-    font-size: 86px;
-    margin-left: 28%;
-    margin-right: 30%;
-    padding: 10px; }
-  .hashtagity-body .text-counter {
-    float: right;
-    margin-right: 200px; }
-  .hashtagity-body .new-hash-tag {
-    width: 65%;
-    height: 30%;
-    margin-left: 20%;
-    margin-right: 20%;
-    padding: 10px;
-    font-size: 22px;
-    font-family: "Marvel", sans-serif; }
-  .hashtagity-body .hash-options {
-    width: 65%;
-    margin-left: 35%;
-    margin-right: 35%;
-    padding: 10px;
-    font-size: 26px;
-    color: black; }
-  .hashtagity-body .create-hash {
-    width: 450px;
-    height: 50px;
-    margin-left: 35%;
-    margin-right: 35%;
-    border: none;
-    border-radius: 10px;
-    font-size: 34;
-    font-family: "Fredoka One", monospace;
-    background-color: #E9AB3B;
+  font-size: 28px; }
+
+.hashtagity-section {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 100px; }
+
+.hashtagity-title {
+  color: rgba(62, 17, 66, 0.75);
+  font-family: "Kranky", monospace;
+  letter-spacing: 14px;
+  font-size: 60px;
+  margin-left: 33%;
+  padding: 10px; }
+
+.text-counter {
+  float: right;
+  margin-right: 300px;
+  margin-top: -90px;
+  width: 100px;
+  padding: 0px;
+  font-family: "Kranky", monospace;
+  font-size: 19px; }
+
+.hashtaigty-textarea {
+  width: 50%;
+  height: 8%;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: -30px;
+  padding: 10px;
+  font-size: 26px;
+  font-family: "Marvel", sans-serif;
+  border-radius: 10px;
+  border: 2px solid rgba(62, 17, 66, 0.4); }
+
+.hashtaigty-textarea:focus {
+  outline-offset: 0;
+  outline: none; }
+
+.hashtagity-options {
+  width: 45%;
+  margin-left: 28%;
+  padding: 10px;
+  font-size: 26px;
+  color: black;
+  font-family: "Kranky", monospace; }
+
+.hashtagity-convertText-button {
+  width: 200px;
+  height: 50px;
+  margin-left: 42%;
+  margin-top: 10px;
+  display: none;
+  background: rgba(62, 17, 66, 0.4);
+  font-size: 32px;
+  font-family: "Kranky", monospace;
+  color: #E9AB3B;
+  cursor: pointer;
+  border: 2px solid darkgrey;
+  border-radius: 10px; }
+
+.hashtagity-list {
+  list-style-type: none; }
+
+.view {
+  font-size: 24px;
+  padding-bottom: 10px; }
+
+.icons {
+  color: rgba(62, 17, 66, 0.4); }
+  .icons .icon-link {
     color: rgba(62, 17, 66, 0.75); }
-  .hashtagity-body .hashtagity ul {
-    list-style-type: none; }
-    .hashtagity-body .hashtagity ul li {
-      font-size: 36px; }
-    .hashtagity-body .hashtagity ul .icons i {
-      font-size: 32px; }
-    .hashtagity-body .hashtagity ul .icons a {
-      color: black; }
-  .hashtagity-body .hash-tag-list input.edit {
-    display: none; }
-  .hashtagity-body .hash-tag-list .editing label {
-    display: none; }
-  .hashtagity-body .hash-tag-list .editing input.edit {
-    width: 200px;
-    height: 50px;
-    font-size: 22px;
-    font-family: "Marvel", sans-serif;
-    display: inline; }
+
+.hashtagity-list input.edit {
+  display: none; }
+
+.hashtagity-list .editing .edit-text {
+  display: none; }
+
+.hashtagity-list .editing input.edit {
+  width: 200px;
+  height: 50px;
+  display: inline;
+  font-size: 22px;
+  font-family: "Marvel", sans-serif; }
 
 .error {
   color: red;

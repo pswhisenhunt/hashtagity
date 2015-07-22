@@ -206,7 +206,7 @@ var AppView = Backbone.View.extend({
   },
 
   convertText: function() {
-    var hashType = this.$('.hash-type:checked').val();
+    var hashType = this.$('.hashtagity-hash-type-input:checked').val();
     var convertedText = null;
     var textToConvert = this.input.val().trim();
 
@@ -257,6 +257,8 @@ var KEY_ENTER = 13;
 ConvertedTextView = Backbone.View.extend({
   tagName: 'li',
 
+  className: 'hashtagity-li',
+
   template: _.template($('#hash-tag-template').html()),
 
   events: {
@@ -278,7 +280,7 @@ ConvertedTextView = Backbone.View.extend({
     this.input = this.$('.edit');
     return this;
   },
-  
+
   handleUpdateEvent: function() {
     this.$el.addClass('editing');
     this.input.focus();
