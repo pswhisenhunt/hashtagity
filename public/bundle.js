@@ -19,7 +19,7 @@ var Hashtagify = {
   },
 
   acryonymify: function(text) {
-    text = text.split(' ');
+    text = this.checkPunctuation(text);
     for (var i = 0; i <= text.length-1; i++) {
       if (text[i] === 'are') {
         text[i] = 'r'
@@ -36,7 +36,7 @@ var Hashtagify = {
   },
 
   hashEvery: function(text) {
-    text = text.split(' ');
+    text = this.checkPunctuation(text);
     for (var i = 0; i <= text.length-1; i++) {
       text[i] = '#' + text[i];
     }
@@ -55,6 +55,7 @@ var Hashtagify = {
       'love': 'luv',
       'night': 'nite',
       'tonight': '2nite',
+      'doing': 'doin',
       'today': '2day',
       'good': 'g\'',
       'cutie': 'QT',
@@ -69,7 +70,8 @@ var Hashtagify = {
       'information': 'info',
       'in': 'n'
     }
-    text = text.split(' ');
+
+    text = this.checkPunctuation(text);
     var shortenedSentence = '';
     for(var i = 0; i < text.length; i++) {
       if (acceptableShortenWords.hasOwnProperty(text[i])) {
@@ -80,6 +82,20 @@ var Hashtagify = {
       }
     }
     return '#' + shortenedSentence.trim();
+  },
+
+  checkPunctuation: function(text) {
+    text = text.split(' ');
+    var lastWordInSentence = text.pop()
+    var hasPunctuation = lastWordInSentence.charAt(lastWordInSentence.length-1);
+    if (hasPunctuation === '?' || hasPunctuation === '.' || hasPunctuation === '!' || hasPunctuation === ';') {
+      lastWordInSentence = lastWordInSentence.substring(0, lastWordInSentence.length-1);
+      text.push(lastWordInSentence);
+    }
+    else {
+      text.push(lastWordInSentence);
+    }
+    return text;
   }
 }
 
