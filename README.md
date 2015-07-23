@@ -10,7 +10,7 @@ User puts in text and selects an option:
 This is an example of what each option produces when given the text 'i love you':
 ![hashtagity](https://github.com/pswhisenhunt/hashtagity/blob/master/hashtagity-images/display_each_method.png)
 
-You can edit text inline by double clicking the text, or by clicking the edit (pencil) icon, you can also delete the hashtag by clicking the 'x' icon:
+You can edit text inline by double clicking the text, or by clicking the edit (pencil) icon.
 ![hashtagity](https://github.com/pswhisenhunt/hashtagity/blob/master/hashtagity-images/edit.png)
 
 You cannot create a hashtag without text:
