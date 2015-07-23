@@ -50,8 +50,8 @@ $font-kranky: 'Kranky', monospace;
   outline: none;
 }
 .hashtagity-options {
-  width:45%;
-  margin-left: 28%;
+  width: 60%;
+  margin-left: 20%;
   padding: 10px;
 
   font-size: 26px;
@@ -63,18 +63,21 @@ $font-kranky: 'Kranky', monospace;
   height: 50px;
   margin-left: 42%;
   margin-top: 10px;
-  display: none;
+  border: 2px solid darkgrey;
+  border-radius: 10px;
 
-  background: $color-secondary-opacity;
+  background: rgba(65, 12, 69, 1);
   font-size: 32px;
   font-family: $font-kranky;
-  color: $color-orange;
+  color: lightgrey;
   cursor: pointer;
-  border: 2px solid darkgrey;
-  border-radius: 10px
 }
 .hashtagity-list {
   list-style-type: none;
+}
+
+.hashtagity-hash-type-input {
+  margin-left: 10px;
 }
 
 .view {
@@ -91,9 +94,11 @@ $font-kranky: 'Kranky', monospace;
 .hashtagity-list input.edit {
   display: none;
 }
+
 .hashtagity-list .editing .edit-text {
   display: none;
 }
+
 .hashtagity-list .editing input.edit {
   width: 200px;
   height: 50px;
@@ -102,6 +107,7 @@ $font-kranky: 'Kranky', monospace;
   font-size: 22px;
   font-family: $font-body;
 }
+
 .error {
   color: red;
   font-size: 24px;

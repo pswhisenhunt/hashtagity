@@ -41,8 +41,8 @@
   outline: none; }
 
 .hashtagity-options {
-  width: 45%;
-  margin-left: 28%;
+  width: 60%;
+  margin-left: 20%;
   padding: 10px;
   font-size: 26px;
   color: black;
@@ -53,17 +53,19 @@
   height: 50px;
   margin-left: 42%;
   margin-top: 10px;
-  display: none;
-  background: rgba(62, 17, 66, 0.4);
+  border: 2px solid darkgrey;
+  border-radius: 10px;
+  background: #410c45;
   font-size: 32px;
   font-family: "Kranky", monospace;
-  color: #E9AB3B;
-  cursor: pointer;
-  border: 2px solid darkgrey;
-  border-radius: 10px; }
+  color: lightgrey;
+  cursor: pointer; }
 
 .hashtagity-list {
   list-style-type: none; }
+
+.hashtagity-hash-type-input {
+  margin-left: 10px; }
 
 .view {
   font-size: 24px;

@@ -4,6 +4,7 @@ var Hashtagify = {
   },
 
   acryonymify: function(text) {
+    console.log('inside acryonymify');
     text = this.checkPunctuation(text);
     for (var i = 0; i <= text.length-1; i++) {
       if (text[i] === 'are') {
@@ -25,6 +26,7 @@ var Hashtagify = {
     for (var i = 0; i <= text.length-1; i++) {
       text[i] = '#' + text[i];
     }
+    console.log(text);
     return text.join(' ');
   },
 
